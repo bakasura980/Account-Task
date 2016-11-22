@@ -1,5 +1,0 @@
-c:\users\lubo\documents\visual studio 2015\Projects\Innexys_Work\Innxys.Models\bin\Debug\Innxys.Models.dll
-c:\users\lubo\documents\visual studio 2015\Projects\Innexys_Work\Innxys.Models\bin\Debug\Innxys.Models.pdb
-c:\users\lubo\documents\visual studio 2015\Projects\Innexys_Work\Innxys.Models\obj\Debug\Innexys.Models.csprojResolveAssemblyReference.cache
-c:\users\lubo\documents\visual studio 2015\Projects\Innexys_Work\Innxys.Models\obj\Debug\Innxys.Models.dll
-c:\users\lubo\documents\visual studio 2015\Projects\Innexys_Work\Innxys.Models\obj\Debug\Innxys.Models.pdb
