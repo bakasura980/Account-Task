@@ -1,0 +1,20 @@
+﻿@using Innexys_Work.Security
+@model IEnumerable<Innexys.Models.Task>
+
+@{
+    ViewBag.Title = "ViewTasks";
+}
+<h1>@SessionPersiter.Email</h1>
+<h2>ViewTasks</h2>
+
+<div>
+    <h4>Task</h4>
+     @foreach (var task in Model)
+     {
+         @Html.ActionLink(task.Subject, "EditTask", new { subject = task.Subject }) 
+         <br>
+     }
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Innexys" , "Account")
+</p>
