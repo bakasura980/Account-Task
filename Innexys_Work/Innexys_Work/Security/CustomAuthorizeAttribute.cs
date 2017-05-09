@@ -1,7 +1,9 @@
-﻿using Innexys_Work.Models;
+﻿using Innexys.Models;
+using Innexys_Work.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -11,20 +13,19 @@ namespace Innexys_Work.Security
     {
         public override void OnAuthorization(AuthorizationContext filterContext)
         {
-            if (string.IsNullOrEmpty(SessionPersiter.Email))
+            if (SessionPersiter.Account == null)
                 filterContext.Result = new RedirectToRouteResult(
-                    new System.Web.Routing.RouteValueDictionary(new { controller = "Account", index = "Login" }));
+                    new System.Web.Routing.RouteValueDictionary(new { controller = "Account", action = "Login" }));
             else
             {
-                AccountModel accmodel = new AccountModel();
-                CustomPrincipal customprincipal = new CustomPrincipal(accmodel.Find(SessionPersiter.Email));
+                CustomPrincipal customprincipal = new CustomPrincipal(SessionPersiter.Account);
                 if (!customprincipal.IsInRole(Roles))
                 {
                     filterContext.Result = new RedirectToRouteResult(
                         new System.Web.Routing.RouteValueDictionary(new { controller = "Error", action = "Login" }));
                 }
             }
-                    
         }
+
     }
 }

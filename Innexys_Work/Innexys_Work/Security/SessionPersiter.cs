@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Innexys.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -7,26 +8,26 @@ namespace Innexys_Work.Security
 {
     public class SessionPersiter
     {
-        static string usernameSessionvar = "email";
+        static string accountSessionvar = "account";
 
-        public static string Email
+        public static Account Account
         {
             get
             {
                 if (HttpContext.Current == null)
                 {
-                    return string.Empty;
+                    return null;
                 }
-                var sessionvar = HttpContext.Current.Session[usernameSessionvar];
+                var sessionvar = HttpContext.Current.Session[accountSessionvar];
                 if (sessionvar != null)
                 {
-                    return sessionvar as string;
+                    return sessionvar as Account;
                 }
                 return null;
             }
             set
             {
-                HttpContext.Current.Session[usernameSessionvar] = value;
+                HttpContext.Current.Session[accountSessionvar] = value;
             }
         }
     }

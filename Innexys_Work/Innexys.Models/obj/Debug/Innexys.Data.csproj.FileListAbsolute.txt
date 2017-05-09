@@ -10,3 +10,15 @@ c:\users\lubo\documents\visual studio 2015\Projects\Innexys_Work\Innexys.Models\
 c:\users\lubo\documents\visual studio 2015\Projects\Innexys_Work\Innexys.Models\obj\Debug\Innexys.Data.csprojResolveAssemblyReference.cache
 c:\users\lubo\documents\visual studio 2015\Projects\Innexys_Work\Innexys.Models\obj\Debug\Innexys.Models.dll
 c:\users\lubo\documents\visual studio 2015\Projects\Innexys_Work\Innexys.Models\obj\Debug\Innexys.Models.pdb
+C:\Users\Lubo\Desktop\Account-Task\Innexys_Work\Innexys.Models\bin\Debug\Innexys.Models.dll.config
+C:\Users\Lubo\Desktop\Account-Task\Innexys_Work\Innexys.Models\bin\Debug\Innexys.Models.dll
+C:\Users\Lubo\Desktop\Account-Task\Innexys_Work\Innexys.Models\bin\Debug\Innexys.Models.pdb
+C:\Users\Lubo\Desktop\Account-Task\Innexys_Work\Innexys.Models\bin\Debug\EntityFramework.dll
+C:\Users\Lubo\Desktop\Account-Task\Innexys_Work\Innexys.Models\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Lubo\Desktop\Account-Task\Innexys_Work\Innexys.Models\bin\Debug\Innxys.Models.dll
+C:\Users\Lubo\Desktop\Account-Task\Innexys_Work\Innexys.Models\bin\Debug\Innxys.Models.pdb
+C:\Users\Lubo\Desktop\Account-Task\Innexys_Work\Innexys.Models\bin\Debug\EntityFramework.xml
+C:\Users\Lubo\Desktop\Account-Task\Innexys_Work\Innexys.Models\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Lubo\Desktop\Account-Task\Innexys_Work\Innexys.Models\obj\Debug\Innexys.Data.csprojResolveAssemblyReference.cache
+C:\Users\Lubo\Desktop\Account-Task\Innexys_Work\Innexys.Models\obj\Debug\Innexys.Models.dll
+C:\Users\Lubo\Desktop\Account-Task\Innexys_Work\Innexys.Models\obj\Debug\Innexys.Models.pdb

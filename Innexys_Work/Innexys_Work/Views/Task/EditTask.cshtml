@@ -4,7 +4,22 @@
     ViewBag.Title = "EditTask";
 }
 
-<h2>EditTask</h2>
+@section NavSection {
+<nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand">Edit Task</a>
+        </div>
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    @Html.ActionLink("Back to List", "Innexys", "Account")
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+}
 
 
 @using (Html.BeginForm())
@@ -12,63 +27,52 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Task</h4>
-        <hr />
+     
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Subject, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Subject, new { htmlAttributes = new { @class = "form-control" } })
+            <h4>
+                @Html.LabelFor(model => model.Subject)
+            </h4>
+                @Html.TextBoxFor(model => model.Subject, new { Style = "color: black;", @class = "text-center" })
                 @Html.ValidationMessageFor(model => model.Subject, "", new { @class = "text-danger" })
-            </div>
         </div>
-
+     
         <div class="form-group">
-            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.StartDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control" } })
+            <h4>
+                @Html.LabelFor(model => model.StartDate)
+            </h4>
+                @Html.TextBoxFor(model => model.StartDate, new { Style = "color: black;", @class = "text-center" })
                 @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
-            </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.EndDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control" } })
+            <h4>
+                @Html.LabelFor(model => model.EndDate)
+            </h4>
+                @Html.TextBoxFor(model => model.EndDate, new { Style = "color: black;", @class = "text-center" })
                 @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
-            </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Category, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Category, new { htmlAttributes = new { @class = "form-control" } })
+            <h4>
+                @Html.LabelFor(model => model.Category)
+            </h4>
+                @Html.TextBoxFor(model => model.Category, new { Style = "color: black;", @class = "text-center" })
                 @Html.ValidationMessageFor(model => model.Category, "", new { @class = "text-danger" })
-            </div>
         </div>
 
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
+            <h4>
+                @Html.LabelFor(model => model.Description)
+            </h4>
+                @Html.TextAreaFor(model => model.Description, new { Style = "color: black; width: 230px; height:60px; border: 1px solid #ee4b28; border-left: 6px solid #ee4b28; border-radius: 10px;" })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary btn-xl" />
         </div>
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Innexys", "Account")
-</div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
 }

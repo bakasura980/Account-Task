@@ -1,0 +1,34 @@
+﻿@using Innexys_Work.Security
+@model ICollection<Innexys.Models.Task>
+
+@{
+    ViewBag.Title = "ViewTasks";
+}
+
+@section NavSection {
+    <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand">Personal Tasks</a>
+            </div>
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        @Html.ActionLink("Back to List", "Innexys", "Account")
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+}
+
+<div>
+     @foreach (var task in Model)
+     {
+         <div class="h4">
+             @Html.ActionLink(task.Subject, "EditTask", new { subject = task.Subject })
+             <hr>
+         </div>
+        
+     }
+</div>

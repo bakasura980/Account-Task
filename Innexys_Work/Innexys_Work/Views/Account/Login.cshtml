@@ -1,24 +1,35 @@
 ﻿@model Innexys_Work.ViewModels.AccountViewModel
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Login";
 }
 
-<h2>Index</h2>
+@section NavSection {
+    <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header ">
+                <a class="navbar-brand">Login</a>
+            </div>
+        </div>
+    </nav>
+}
+
 @using (Html.BeginForm("Login", "Account", FormMethod.Post))
 {
     @ViewBag.Error
-    <tr>
-        <td>@Html.LabelFor(model => model.Account.Name )</td>
-        <td>@Html.TextBoxFor(model => model.Account.Name)</td>
-    </tr>
-    <tr>
-        <td>@Html.LabelFor(model => model.Account.Email)</td>
-        <td>@Html.TextBoxFor(model => model.Account.Email)</td>
-    </tr>
-
-    <tr>
-        <td>&nbsp;</td>
-        <td><input type="submit" value="Login"/></td>
-    </tr>
+    <div>
+        <div>
+            <h4>@Html.LabelFor(model => model.Account.Name)</h4>
+            @Html.TextBoxFor(model => model.Account.Name, new { Style = "color: black;", @class = "text-center" })
+        </div>
+        <br>
+        <div>
+            <h4>@Html.LabelFor(model => model.Account.Email)</h4>
+            @Html.TextBoxFor(model => model.Account.Email, new { Style = "color: black;", @class = "text-center" })
+        </div>
+        <br>
+        <div>
+            <input type="submit" value="Login" class="btn btn-primary btn-xl" />
+        </div>
+    </div>
 }
 

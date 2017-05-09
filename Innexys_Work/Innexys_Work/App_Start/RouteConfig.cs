@@ -15,8 +15,7 @@ namespace Innexys_Work
 
             routes.MapRoute(
                 name: "Account",
-                url: "Account/{action}",
-                defaults: new { controller = "Account", action = "Login" }
+                url: "Account/{controler}/{action}"
             );
 
             routes.MapRoute(

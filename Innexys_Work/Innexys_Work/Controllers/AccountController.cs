@@ -4,9 +4,16 @@ using Innexys_Work.Security;
 using Innexys_Work.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Newtonsoft.Json;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
+using Innexys_Work.Singleton;
 
 namespace Innexys_Work.Controllers
 {
@@ -18,29 +25,65 @@ namespace Innexys_Work.Controllers
         }
 
         [HttpPost]
-        public ActionResult Login(AccountViewModel accviewmodel)
+        public ActionResult Login(Account account)
         {
-            AccountModel accmodel = new AccountModel();
-            if (accmodel.Login(accviewmodel.Account.Name, accviewmodel.Account.Email) == null)
+            UriApiBuilder.SetUrlPathWithParam("Accounts", "GetAccount", "email", $"{account.Email}");
+            WebRequest request = WebRequest.Create(UriApiBuilder.GetUri());
+
+            request.ContentType = "application/json; charset=utf-8";
+
+            try
+            {
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                {
+                    using (StreamReader dataStream = new StreamReader(response.GetResponseStream()))
+                    {
+                        Account gottenAccount = JsonConvert.DeserializeObject<Account>(dataStream.ReadToEnd());
+                        if (gottenAccount.Name.Equals(account.Name))
+                        {
+                            SessionPersiter.Account = gottenAccount;
+                            return RedirectToAction("Innexys");
+                        }
+                        else
+                        {
+                            ViewBag.Error = "The Name does not match this email";
+                            return View("Login");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
             {
                 ViewBag.Error = "This Account does not exists";
                 return View("Login");
             }
-            SessionPersiter.Email = accviewmodel.Account.Email;
-            return RedirectToAction("Innexys");
+        }
+        
+        public ActionResult Logout()
+        {
+            SessionPersiter.Account = null;
+            return RedirectToAction("Login");
         }
 
         [CustomAuthorize]
         public ActionResult Innexys()
         {
-            AccountModel accmodel = new AccountModel();
-            return View(accmodel.All());
-        }
+            UriApiBuilder.SetUrlPath("Accounts","GetAccounts");
 
-        public ActionResult Logout()
-        {
-            SessionPersiter.Email = string.Empty;
-            return RedirectToAction("Login");
+            WebRequest request = WebRequest.Create(UriApiBuilder.GetUri());
+            request.ContentType = "application/json; charset=utf-8";
+
+            ICollection<Account> accounts;
+
+            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+            {
+                using (StreamReader dataStream = new StreamReader(response.GetResponseStream()))
+                {
+                    accounts = JsonConvert.DeserializeObject <ICollection<Account>>(dataStream.ReadToEnd());
+
+                }
+            }
+            return View(accounts);
         }
 
         public ActionResult Register()
@@ -51,43 +94,70 @@ namespace Innexys_Work.Controllers
         [HttpPost]
         public ActionResult Register(Account account)
         {
-            AccountModel accmodel = new AccountModel();
-            if (accmodel.Register(account))
+            UriApiBuilder.SetUrlPathWithParam("Accounts", "GetAccount", "email", $"{account.Email}");
+
+            WebRequest request = WebRequest.Create(UriApiBuilder.GetUri());
+
+            try
             {
-                SessionPersiter.Email = account.Email;
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                {
+                    ViewBag.Error = "This Account exists, try another email";
+                    return View("Register");
+                }
+            }
+            catch (Exception)
+            {
+                HttpClient clientPostRequest = new HttpClient();
+                HttpContent postContent = new StringContent(JsonConvert.SerializeObject(account), 
+                    Encoding.UTF8, "application/json");
+
+                UriApiBuilder.SetUrlPath("Accounts","CreateAccount");
+
+                clientPostRequest.PostAsync(UriApiBuilder.GetUri(), postContent).
+                    ContinueWith((createdAccount) => createdAccount.Result.EnsureSuccessStatusCode());
+
+                UriApiBuilder.SetUrlPath("Accounts", "GetLastRegisteredAccount");
+                request = WebRequest.Create(UriApiBuilder.GetUri());
+                request.ContentType = "application/json; charset=utf-8";
+
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                {
+                    using (StreamReader dataStream = new StreamReader(response.GetResponseStream()))
+                    {
+                        SessionPersiter.Account = JsonConvert.DeserializeObject<Account>(dataStream.ReadToEnd());
+                    }
+                }
+
                 return RedirectToAction("Innexys");
             }
-            else
-            {
-                return RedirectToAction("Register"); 
-            }
-        }
-
-        private ActionResult ReturnFind()
-        {
-            AccountModel accmodel = new AccountModel();
-            return View(accmodel.Find(SessionPersiter.Email));
-        }
-
-        [CustomAuthorize]
-        public ActionResult ViewAccount()
-        {
-            return ReturnFind();
         }
 
         [CustomAuthorize]
         public ActionResult Edit()
         {
-            return ReturnFind();
+            return View(SessionPersiter.Account);
         }
 
         [HttpPost]
         [CustomAuthorize]
         public ActionResult Edit(Account account)
         {
-            AccountModel accmodel = new AccountModel();
-            accmodel.Update(account);
-            return RedirectToAction("Innexys");
+            HttpClient clientPutRequest = new HttpClient();
+            HttpContent putContent = new StringContent(JsonConvert.SerializeObject(account),
+                Encoding.UTF8, "application/json");
+
+            UriApiBuilder.SetUrlPath("Accounts","UpdateAccount");
+
+            clientPutRequest.PutAsync(UriApiBuilder.GetUri(), putContent).
+                ContinueWith((updatedAccount) => updatedAccount.Result.EnsureSuccessStatusCode());
+
+            SessionPersiter.Account.Name = account.Name;
+            SessionPersiter.Account.Email = account.Email;
+            SessionPersiter.Account.Phone = account.Phone;
+            SessionPersiter.Account.Position = account.Position;
+
+            return RedirectToAction("Innexys","Account");
         }
     }
 }

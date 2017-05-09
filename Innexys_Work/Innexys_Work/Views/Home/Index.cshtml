@@ -1,9 +1,10 @@
-﻿<center><h1>Manage your team work</h1></center>
+﻿<center><h2>Manage your organization work</h2></center>
+<br>
 <center>
     <div>
         <ul>
-            @Html.ActionLink("Login", "Login", "Account")
-            @Html.ActionLink("Register", "Register", "Account")
+            @Html.ActionLink("Login", "Login", new { controller = "Account" }, new { @class = "btn btn-primary btn-xl" })
+            @Html.ActionLink("Register", "Register", new { controller = "Account" }, new { @class = "btn btn-primary btn-xl" })
         </ul>
     </div>
 </center>
